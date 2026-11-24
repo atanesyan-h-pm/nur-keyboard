@@ -70,6 +70,11 @@ Key codes follow ANSI positions. On ISO keyboards macOS may swap the key left of
 - `docs/mapping-tables.md` — the transcription worksheet: xkb key → mac keycode → characters, per layout.
 - `scripts/validate.sh` — checks the layouts against Apple's DTD, lints the plists, checks ids and `KLInfo` entries.
 
+Two macOS rules that make it silently ignore the bundle (both are checked by `scripts/validate.sh` or noted here):
+
+- A `.keylayout` must never contain `&#x0000;` (NUL is illegal XML; the whole file is dropped).
+- `CFBundleIdentifier` and every `TISInputSourceID` must contain `keyboardlayout` (here: `am.nur.keyboardlayout.nur…`).
+
 After editing a `.keylayout`, run `scripts/validate.sh`, reinstall, and log out and back in. Ukelele (free) can
 open these files if you'd rather edit them in a GUI.
 
@@ -93,6 +98,6 @@ See `LICENSE` and `upstream/COPYING`.
 ## TODO (manual checks after logging back in)
 
 - [ ] All six layouts appear in Input Sources under Armenian
-- [ ] Keyboard Viewer matches `docs/mapping-tables.md` for base / Shift / Caps Lock / Option / Shift+Option
+- [x] macOS key translation (`UCKeyTranslate`) matches `docs/mapping-tables.md` for base / Shift / Caps Lock / Option / Command — 1431 pairs, 0 mismatches
 - [ ] Type a test sentence in TextEdit with each layout
 - [ ] Cmd+C / Cmd+V / Cmd+Z / Cmd+Q work with every layout

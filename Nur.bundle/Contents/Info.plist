@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleIdentifier</key>
-	<string>am.nur.keyboard</string>
+	<string>am.nur.keyboardlayout.nur</string>
 	<key>CFBundleName</key>
 	<string>Nur Armenian Keyboard</string>
 	<key>CFBundlePackageType</key>
@@ -19,7 +19,7 @@
 		<key>TISIconIsTemplate</key>
 		<true/>
 		<key>TISInputSourceID</key>
-		<string>am.nur.keyboard.eastern</string>
+		<string>am.nur.keyboardlayout.nur.eastern</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
@@ -28,7 +28,7 @@
 		<key>TISIconIsTemplate</key>
 		<true/>
 		<key>TISInputSourceID</key>
-		<string>am.nur.keyboard.eastern-alt</string>
+		<string>am.nur.keyboardlayout.nur.eastern-alt</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
@@ -37,7 +37,7 @@
 		<key>TISIconIsTemplate</key>
 		<true/>
 		<key>TISInputSourceID</key>
-		<string>am.nur.keyboard.phonetic</string>
+		<string>am.nur.keyboardlayout.nur.phonetic</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
@@ -46,7 +46,7 @@
 		<key>TISIconIsTemplate</key>
 		<true/>
 		<key>TISInputSourceID</key>
-		<string>am.nur.keyboard.phonetic-alt</string>
+		<string>am.nur.keyboardlayout.nur.phonetic-alt</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
@@ -55,7 +55,7 @@
 		<key>TISIconIsTemplate</key>
 		<true/>
 		<key>TISInputSourceID</key>
-		<string>am.nur.keyboard.standard</string>
+		<string>am.nur.keyboardlayout.nur.standard</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
@@ -64,7 +64,7 @@
 		<key>TISIconIsTemplate</key>
 		<true/>
 		<key>TISInputSourceID</key>
-		<string>am.nur.keyboard.western</string>
+		<string>am.nur.keyboardlayout.nur.western</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>

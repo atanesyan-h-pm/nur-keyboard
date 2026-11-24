@@ -7,6 +7,8 @@ cd "$(dirname "$0")/.."
 DTD=/System/Library/DTDs/KeyboardLayout.dtd
 fail=0
 for f in Nur.bundle/Contents/Resources/*.keylayout; do
+  # U+0000 is illegal in every XML version; macOS silently drops the layout.
+  if grep -q '&#x0*;\|&#0*;' "$f"; then echo "FAIL  $f contains a NUL character reference"; fail=1; continue; fi
   if sed -e '1s/version="1.1"/version="1.0"/' \
          -e 's/&#x00[01][0-9A-Fa-f];/\&#x0020;/g' -e 's/&#x007F;/\&#x0020;/g' "$f" \
      | xmllint --noout --dtdvalid "$DTD" - 2>/dev/null; then
@@ -26,4 +28,6 @@ for f in Nur.bundle/Contents/Resources/*.keylayout; do
   plutil -extract "KLInfo_$n" xml1 -o /dev/null Nur.bundle/Contents/Info.plist 2>/dev/null \
     || { echo "FAIL  no KLInfo_$n in Info.plist"; fail=1; }
 done
+plutil -extract CFBundleIdentifier raw Nur.bundle/Contents/Info.plist | grep -q keyboardlayout \
+  || { echo "FAIL  CFBundleIdentifier must contain 'keyboardlayout'"; fail=1; }
 exit $fail
