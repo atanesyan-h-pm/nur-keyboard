@@ -41,7 +41,7 @@ administrator password.
 Open the **Terminal** app (in Applications › Utilities), paste this line and press Return:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/atanesyan-h-pm/nur-keyboard/main/install.sh | sh
+curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh | sh
 ```
 
 It downloads Nur from GitHub and copies the layouts into the `Keyboard Layouts` folder inside your own
@@ -113,7 +113,7 @@ and the key left of **Z**. This comes from macOS, not from Nur.
 3. In Terminal, run:
 
    ```bash
-   curl -fsSL https://raw.githubusercontent.com/atanesyan-h-pm/nur-keyboard/main/install.sh | sh -s -- --uninstall
+   curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh | sh -s -- --uninstall
    ```
 
 4. Log out and log back in.

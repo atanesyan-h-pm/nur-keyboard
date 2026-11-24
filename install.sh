@@ -1,8 +1,8 @@
 #!/bin/sh
 # Nur — Armenian keyboard layouts for macOS
 #
-# Install:    curl -fsSL https://raw.githubusercontent.com/atanesyan-h-pm/nur-keyboard/main/install.sh | sh
-# Uninstall:  curl -fsSL https://raw.githubusercontent.com/atanesyan-h-pm/nur-keyboard/main/install.sh | sh -s -- --uninstall
+# Install:    curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh | sh
+# Uninstall:  curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh | sh -s -- --uninstall
 #
 # Installs for the current user only (~/Library/Keyboard Layouts); no admin password needed.
 # Run from a checkout (sh install.sh), it installs that checkout's Nur.bundle instead of downloading.
