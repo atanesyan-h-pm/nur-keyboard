@@ -1,8 +1,8 @@
 <?xml version="1.1" encoding="UTF-8"?>
 <!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">
-<!-- Armenian Phonetic Alt: macOS port of xkeyboard-config symbols/am "phonetic-alt". -->
+<!-- Nur Phonetic Alt: macOS port of xkeyboard-config symbols/am "phonetic-alt". -->
 <!-- Maps: 0 base, 1 Shift, 2 Caps Lock, 3 Option/Command (US QWERTY), 4 Shift+Option (US), 5 Control -->
-<keyboard group="126" id="-21003" name="Armenian Phonetic Alt" maxout="1">
+<keyboard group="126" id="-21003" name="Nur Phonetic Alt" maxout="1">
   <layouts>
     <layout first="0" last="17" modifiers="mods" mapSet="maps"/>
   </layouts>

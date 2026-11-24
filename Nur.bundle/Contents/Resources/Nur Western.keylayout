@@ -1,8 +1,8 @@
 <?xml version="1.1" encoding="UTF-8"?>
 <!DOCTYPE keyboard SYSTEM "file://localhost/System/Library/DTDs/KeyboardLayout.dtd">
-<!-- Armenian Eastern Alt: macOS port of xkeyboard-config symbols/am "eastern-alt". -->
+<!-- Nur Western: macOS port of xkeyboard-config symbols/am "western". -->
 <!-- Maps: 0 base, 1 Shift, 2 Caps Lock, 3 Option/Command (US QWERTY), 4 Shift+Option (US), 5 Control -->
-<keyboard group="126" id="-21006" name="Armenian Eastern Alt" maxout="1">
+<keyboard group="126" id="-21005" name="Nur Western" maxout="1">
   <layouts>
     <layout first="0" last="17" modifiers="mods" mapSet="maps"/>
   </layouts>
@@ -31,22 +31,22 @@
     <keyMap index="0">
       <key code="0" output="ա"/>
       <key code="1" output="ս"/>
-      <key code="2" output="դ"/>
+      <key code="2" output="տ"/>
       <key code="3" output="ֆ"/>
       <key code="4" output="հ"/>
-      <key code="5" output="ք"/>
+      <key code="5" output="կ"/>
       <key code="6" output="զ"/>
       <key code="7" output="ց"/>
       <key code="8" output="գ"/>
-      <key code="9" output="վ"/>
+      <key code="9" output="ւ"/>
       <key code="10" output="§"/>
-      <key code="11" output="բ"/>
+      <key code="11" output="պ"/>
       <key code="12" output="խ"/>
-      <key code="13" output="ւ"/>
+      <key code="13" output="վ"/>
       <key code="14" output="է"/>
       <key code="15" output="ր"/>
       <key code="16" output="ե"/>
-      <key code="17" output="տ"/>
+      <key code="17" output="դ"/>
       <key code="18" output="։"/>
       <key code="19" output="ձ"/>
       <key code="20" output="յ"/>
@@ -64,12 +64,12 @@
       <key code="32" output="ը"/>
       <key code="33" output="չ"/>
       <key code="34" output="ի"/>
-      <key code="35" output="պ"/>
+      <key code="35" output="բ"/>
       <key code="36" output="&#x000D;"/>
       <key code="37" output="լ"/>
       <key code="38" output="ճ"/>
       <key code="39" output="փ"/>
-      <key code="40" output="կ"/>
+      <key code="40" output="ք"/>
       <key code="41" output="թ"/>
       <key code="42" output="&#x0027;"/>
       <key code="43" output="շ"/>
@@ -134,22 +134,22 @@
     <keyMap index="1">
       <key code="0" output="Ա"/>
       <key code="1" output="Ս"/>
-      <key code="2" output="Դ"/>
+      <key code="2" output="Տ"/>
       <key code="3" output="Ֆ"/>
       <key code="4" output="Հ"/>
-      <key code="5" output="Ք"/>
+      <key code="5" output="Կ"/>
       <key code="6" output="Զ"/>
       <key code="7" output="Ց"/>
       <key code="8" output="Գ"/>
-      <key code="9" output="Վ"/>
+      <key code="9" output="Ւ"/>
       <key code="10" output="±"/>
-      <key code="11" output="Բ"/>
+      <key code="11" output="Պ"/>
       <key code="12" output="Խ"/>
-      <key code="13" output="Ւ"/>
+      <key code="13" output="Վ"/>
       <key code="14" output="Է"/>
       <key code="15" output="Ր"/>
       <key code="16" output="Ե"/>
-      <key code="17" output="Տ"/>
+      <key code="17" output="Դ"/>
       <key code="18" output="1"/>
       <key code="19" output="Ձ"/>
       <key code="20" output="Յ"/>
@@ -167,12 +167,12 @@
       <key code="32" output="Ը"/>
       <key code="33" output="Չ"/>
       <key code="34" output="Ի"/>
-      <key code="35" output="Պ"/>
+      <key code="35" output="Բ"/>
       <key code="36" output="&#x000D;"/>
       <key code="37" output="Լ"/>
       <key code="38" output="Ճ"/>
       <key code="39" output="Փ"/>
-      <key code="40" output="Կ"/>
+      <key code="40" output="Ք"/>
       <key code="41" output="Թ"/>
       <key code="42" output="՞"/>
       <key code="43" output="Շ"/>
@@ -237,22 +237,22 @@
     <keyMap index="2">
       <key code="0" output="Ա"/>
       <key code="1" output="Ս"/>
-      <key code="2" output="Դ"/>
+      <key code="2" output="Տ"/>
       <key code="3" output="Ֆ"/>
       <key code="4" output="Հ"/>
-      <key code="5" output="Ք"/>
+      <key code="5" output="Կ"/>
       <key code="6" output="Զ"/>
       <key code="7" output="Ց"/>
       <key code="8" output="Գ"/>
-      <key code="9" output="Վ"/>
+      <key code="9" output="Ւ"/>
       <key code="10" output="§"/>
-      <key code="11" output="Բ"/>
+      <key code="11" output="Պ"/>
       <key code="12" output="Խ"/>
-      <key code="13" output="Ւ"/>
+      <key code="13" output="Վ"/>
       <key code="14" output="Է"/>
       <key code="15" output="Ր"/>
       <key code="16" output="Ե"/>
-      <key code="17" output="Տ"/>
+      <key code="17" output="Դ"/>
       <key code="18" output="։"/>
       <key code="19" output="Ձ"/>
       <key code="20" output="Յ"/>
@@ -270,12 +270,12 @@
       <key code="32" output="Ը"/>
       <key code="33" output="Չ"/>
       <key code="34" output="Ի"/>
-      <key code="35" output="Պ"/>
+      <key code="35" output="Բ"/>
       <key code="36" output="&#x000D;"/>
       <key code="37" output="Լ"/>
       <key code="38" output="Ճ"/>
       <key code="39" output="Փ"/>
-      <key code="40" output="Կ"/>
+      <key code="40" output="Ք"/>
       <key code="41" output="Թ"/>
       <key code="42" output="&#x0027;"/>
       <key code="43" output="Շ"/>
