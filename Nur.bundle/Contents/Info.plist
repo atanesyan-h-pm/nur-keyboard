@@ -14,55 +14,55 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>KLInfo_Nur Eastern</key>
+	<key>KLInfo_AM Nur Eastern</key>
 	<dict>
 		<key>TISIconIsTemplate</key>
-		<true/>
+		<false/>
 		<key>TISInputSourceID</key>
 		<string>am.nur.keyboardlayout.nur.eastern</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
-	<key>KLInfo_Nur Eastern Alt</key>
+	<key>KLInfo_AM Nur Eastern Alt</key>
 	<dict>
 		<key>TISIconIsTemplate</key>
-		<true/>
+		<false/>
 		<key>TISInputSourceID</key>
 		<string>am.nur.keyboardlayout.nur.eastern-alt</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
-	<key>KLInfo_Nur Phonetic</key>
+	<key>KLInfo_AM Nur Phonetic</key>
 	<dict>
 		<key>TISIconIsTemplate</key>
-		<true/>
+		<false/>
 		<key>TISInputSourceID</key>
 		<string>am.nur.keyboardlayout.nur.phonetic</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
-	<key>KLInfo_Nur Phonetic Alt</key>
+	<key>KLInfo_AM Nur Phonetic Alt</key>
 	<dict>
 		<key>TISIconIsTemplate</key>
-		<true/>
+		<false/>
 		<key>TISInputSourceID</key>
 		<string>am.nur.keyboardlayout.nur.phonetic-alt</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
-	<key>KLInfo_Nur Standard</key>
+	<key>KLInfo_AM Nur Standard</key>
 	<dict>
 		<key>TISIconIsTemplate</key>
-		<true/>
+		<false/>
 		<key>TISInputSourceID</key>
 		<string>am.nur.keyboardlayout.nur.standard</string>
 		<key>TISIntendedLanguage</key>
 		<string>hy</string>
 	</dict>
-	<key>KLInfo_Nur Western</key>
+	<key>KLInfo_AM Nur Western</key>
 	<dict>
 		<key>TISIconIsTemplate</key>
-		<true/>
+		<false/>
 		<key>TISInputSourceID</key>
 		<string>am.nur.keyboardlayout.nur.western</string>
 		<key>TISIntendedLanguage</key>

@@ -17,7 +17,7 @@ for f in Nur.bundle/Contents/Resources/*.keylayout; do
     echo "FAIL  $f"; fail=1
   fi
 done
-for p in Nur.bundle/Contents/*.plist Nur.bundle/Contents/Resources/en.lproj/*.strings; do
+for p in Nur.bundle/Contents/*.plist Nur.bundle/Contents/Resources/*.lproj/*.strings; do
   plutil -lint "$p" >/dev/null && echo "ok    $p" || { echo "FAIL  $p"; fail=1; }
 done
 # every layout must have a KLInfo entry and a unique id

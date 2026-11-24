@@ -7,7 +7,8 @@ Each cell is `base / Shift`. `*(US)*` means the key is not defined by the xkb va
 
 - Upstream defines only 2 levels (base, Shift). There are no AltGr levels and no dead keys.
 - macOS-only additions: **Caps Lock** gives the Shift letter for Armenian letters (other keys stay base);
-  **Option** / **Shift+Option** type US QWERTY Latin characters; **Command** uses US QWERTY so shortcuts work;
+  **Option** / **Shift+Option** type the same as base / Shift (like AltGr on Linux, which has no level 3 here),
+  so macOS files the layouts under Armenian only; **Command** uses US QWERTY so shortcuts work;
   **Control** produces standard control characters.
 - `LatQ/LatW/LatY/LatA/LatZ` in upstream are aliases of `AD01/AD02/AD06/AC01/AB01`.
 - `KP_n` (Eastern/Western Shift row) are typed as plain digits.
