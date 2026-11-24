@@ -36,38 +36,24 @@ to see in both light and dark mode.
 You need a Mac with macOS. Both Apple Silicon (M1, M2, …) and Intel Macs work. You don't need an
 administrator password.
 
-### 1. Download Nur
+### 1. Run the installer
 
-Open the **Terminal** app (in Applications › Utilities) and paste this line, then press Return:
-
-```bash
-git clone https://github.com/atanesyan-h-pm/nur-keyboard.git
-```
-
-If you use GitHub with an SSH key, you can use `git clone git@github.com:atanesyan-h-pm/nur-keyboard.git` instead.
-
-No git? On the [GitHub page](https://github.com/atanesyan-h-pm/nur-keyboard), click **Code › Download ZIP**,
-then double-click the downloaded file to unzip it. In Terminal, go into the unzipped folder
-(type `cd `, drag the folder onto the Terminal window, and press Return) and skip the `cd` in the next step.
-
-### 2. Run the installer
-
-In Terminal, run:
+Open the **Terminal** app (in Applications › Utilities), paste this line and press Return:
 
 ```bash
-cd nur-keyboard
-scripts/install.sh
+curl -fsSL https://raw.githubusercontent.com/atanesyan-h-pm/nur-keyboard/main/install.sh | sh
 ```
 
-This copies the layouts into the `Keyboard Layouts` folder inside your own Library folder.
-It only affects your user account.
+It downloads Nur from GitHub and copies the layouts into the `Keyboard Layouts` folder inside your own
+Library folder. It only affects your user account. Want to see what it does first? Read
+[install.sh](install.sh).
 
-### 3. Log out and log back in
+### 2. Log out and log back in
 
 macOS only notices new keyboard layouts when you log in. Choose  Apple menu › **Log Out**, then log back in.
 Restarting the Mac works too.
 
-### 4. Add the layouts you want
+### 3. Add the layouts you want
 
 1. Open **System Settings** ( Apple menu › System Settings).
 2. Click **Keyboard** in the sidebar.
@@ -124,10 +110,10 @@ and the key left of **Z**. This comes from macOS, not from Nur.
 
 1. Open System Settings › Keyboard › Text Input › Input Sources › **Edit…**.
 2. Select each **AM Nur …** layout and click the **−** button.
-3. In Terminal, in the `nur-keyboard` folder, run:
+3. In Terminal, run:
 
    ```bash
-   scripts/uninstall.sh
+   curl -fsSL https://raw.githubusercontent.com/atanesyan-h-pm/nur-keyboard/main/install.sh | sh -s -- --uninstall
    ```
 
 4. Log out and log back in.

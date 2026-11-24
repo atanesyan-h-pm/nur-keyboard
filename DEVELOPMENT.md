@@ -84,6 +84,7 @@ Each of these makes macOS silently ignore the layouts or misfile them.
 | Script | What it does |
 |---|---|
 | `scripts/validate.sh` | Validates every `.keylayout` against `/System/Library/DTDs/KeyboardLayout.dtd` (on a masked copy: version set to 1.0 and control-character refs replaced, because `xmllint` can't read XML 1.1 control-character refs); fails on NUL refs; `plutil -lint` on the plists and `.strings`; checks layout ids are unique, that each layout has a `KLInfo_<name>` entry and that the bundle id contains `keyboardlayout`. Exit code 0 means all good. |
+| `install.sh` | The user installer (`curl … \| sh`). Piped, it downloads the `main` branch tarball from GitHub and installs its `Nur.bundle`; run as a file from a checkout (`sh install.sh`), it installs the checkout's bundle. `--uninstall` removes it. All code is inside `main()` so a partial download never runs. |
 | `scripts/install.sh` | Copies `Nur.bundle` to `~/Library/Keyboard Layouts` (per user, no sudo), removes the quarantine flag. Also removes the pre-1.0 `Armenian.bundle`. |
 | `scripts/uninstall.sh` | Removes the bundle from `~/Library/Keyboard Layouts`. |
 | `scripts/build-icons.sh` | Renders `branding/icon.svg` into an iconset (16–512 px, @1x and @2x), builds an `.icns` and copies it as `<layout name>.icns` next to each `.keylayout`. |
