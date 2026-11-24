@@ -49,7 +49,7 @@ Uninstall: remove the layouts from Input Sources, run `scripts/uninstall.sh`, th
 ## Compatibility
 
 Keyboard layouts are XML data with no compiled code, so the same files work on Apple Silicon and Intel.
-No Rosetta, code signing or admin rights are needed. Tested on macOS 26.7 / Apple M4.
+No Rosetta, code signing or admin rights are needed. Built and validated on macOS 26.7 / Apple M4 (typing tests: see TODO below).
 
 Key codes follow ANSI positions. On ISO keyboards macOS may swap the key left of `1` and the key left of `Z`.
 
@@ -67,3 +67,10 @@ open these files if you'd rather edit them in a GUI.
 
 Key mappings come from [xkeyboard-config](https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config).
 See `LICENSE` and `upstream/COPYING`.
+
+## TODO (manual checks after logging back in)
+
+- [ ] All six layouts appear in Input Sources under Armenian
+- [ ] Keyboard Viewer matches `docs/mapping-tables.md` for base / Shift / Caps Lock / Option / Shift+Option
+- [ ] Type a test sentence in TextEdit with each layout
+- [ ] Cmd+C / Cmd+V / Cmd+Z / Cmd+Q work with every layout
