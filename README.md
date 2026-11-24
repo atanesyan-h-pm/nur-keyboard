@@ -1,18 +1,26 @@
-# Armenian Keyboard Layouts for macOS
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="branding/banner-dark.svg">
+  <img alt="Nur — Armenian keyboard layouts for macOS" src="branding/banner-light.svg" width="100%">
+</picture>
 
-Six Armenian keyboard layouts for macOS, ported key for key from the xkeyboard-config `am` layouts.
+# Nur — Armenian keyboard layouts for macOS
+
+**Nur** (Նուռ) is the pomegranate, a symbol woven into the borders of Armenian rugs. Its icon is drawn
+knot by knot on a 16×16 grid, the way a rug is woven.
+
+Six layouts, ported key for key from the xkeyboard-config `am` layouts:
 
 | Layout | Based on (xkeyboard-config `symbols/am`) |
 |---|---|
-| Armenian Standard | `basic` (default) |
-| Armenian Phonetic | `phonetic` |
-| Armenian Phonetic Alt | `phonetic-alt` |
-| Armenian Eastern | `eastern` |
-| Armenian Western | `western` |
-| Armenian Eastern Alt | `eastern-alt` |
+| Nur Standard | `basic` (default) |
+| Nur Phonetic | `phonetic` |
+| Nur Phonetic Alt | `phonetic-alt` |
+| Nur Eastern | `eastern` |
+| Nur Western | `western` |
+| Nur Eastern Alt | `eastern-alt` |
 
 The upstream `olpc` and `olpc-phonetic` variants only add a group-switch key that macOS doesn't use. On a Mac
-they are identical to Armenian Standard and Armenian Phonetic Alt, so they aren't shipped separately.
+they are identical to Nur Standard and Nur Phonetic Alt, so they aren't shipped separately.
 
 Full key tables: [docs/mapping-tables.md](docs/mapping-tables.md).
 
@@ -55,13 +63,27 @@ Key codes follow ANSI positions. On ISO keyboards macOS may swap the key left of
 
 ## Repository layout
 
-- `Armenian.bundle/` — the installable bundle. The `.keylayout` files are maintained by hand.
+- `Nur.bundle/` — the installable bundle. The `.keylayout` files are maintained by hand.
+- `branding/` — SVG sources: `icon-template.svg` (menu-bar icon), `logo.svg`, `banner-light.svg`, `banner-dark.svg`.
+- `scripts/build-icons.sh` — rebuilds the menu-bar `.icns` files from `branding/icon-template.svg`.
 - `upstream/` — vendored xkeyboard-config source and license (see `upstream/SOURCE.md`). Don't edit.
 - `docs/mapping-tables.md` — the transcription worksheet: xkb key → mac keycode → characters, per layout.
 - `scripts/validate.sh` — checks the layouts against Apple's DTD, lints the plists, checks ids and `KLInfo` entries.
 
 After editing a `.keylayout`, run `scripts/validate.sh`, reinstall, and log out and back in. Ukelele (free) can
 open these files if you'd rather edit them in a GUI.
+
+## Brand
+
+| | |
+|---|---|
+| Madder red | `#A3232F` |
+| Saffron | `#D49A2E` |
+| Indigo | `#1E2747` |
+| Cream | `#F4EAD5` |
+| Walnut | `#5B3A29` |
+
+<img alt="Nur logo" src="branding/logo.svg" width="96">
 
 ## Credits
 
