@@ -159,3 +159,10 @@ Keep shapes on whole-unit coordinates (`shape-rendering="crispEdges"`) so the ic
 
 After editing `branding/icon.svg`, run `scripts/build-icons.sh`, then `scripts/validate.sh`, reinstall and
 log out and back in to see the new icon.
+
+### User-guide pictures
+
+`docs/images/step-*.svg` are drawn (not captured) illustrations of the install steps: Terminal, Log Out,
+Keyboard settings, the + list and the input menu. They use simplified light-mode macOS UI, red numbered
+callouts in the brand colours, and embed the paths from `branding/icon.svg`. Edit them as SVG; if the
+installer output, layout names or macOS menus change, update them to match.

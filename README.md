@@ -48,12 +48,18 @@ It downloads Nur from GitHub and copies the layouts into the `Keyboard Layouts` 
 Library folder. It only affects your user account. Want to see what it does first? Read
 [install.sh](install.sh).
 
+<img src="docs/images/step-1-terminal.svg" alt="Terminal with the install command pasted and the 'Nur is installed' message" width="720">
+
 ### 2. Log out and log back in
 
 macOS only notices new keyboard layouts when you log in. Choose  Apple menu › **Log Out**, then log back in.
 Restarting the Mac works too.
 
+<img src="docs/images/step-2-log-out.svg" alt="Apple menu open with Log Out highlighted" width="720">
+
 ### 3. Add the layouts you want
+
+<img src="docs/images/step-3-keyboard-settings.svg" alt="System Settings, Keyboard selected, Edit… next to Input Sources highlighted" width="720">
 
 1. Open **System Settings** ( Apple menu › System Settings).
 2. Click **Keyboard** in the sidebar.
@@ -64,7 +70,11 @@ Restarting the Mac works too.
 
 A layout you have already added won't appear in the **+** list again.
 
+<img src="docs/images/step-4-add-layouts.svg" alt="The + list with Armenian selected, AM Nur layouts selected and the Add button highlighted" width="720">
+
 ## Switching between keyboards
+
+<img src="docs/images/step-5-switch.svg" alt="The input menu in the menu bar showing the AM Nur layouts with the pomegranate icon" width="720">
 
 Once you have more than one input source, you can switch in any of these ways:
 
