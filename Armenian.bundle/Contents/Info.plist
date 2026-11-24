@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleIdentifier</key>
+	<string>am.keyboard.armenian</string>
+	<key>CFBundleName</key>
+	<string>Armenian Keyboard Layouts</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>KLInfo_Armenian Eastern</key>
+	<dict>
+		<key>TISInputSourceID</key>
+		<string>am.keyboard.armenian.eastern</string>
+		<key>TISIntendedLanguage</key>
+		<string>hy</string>
+	</dict>
+	<key>KLInfo_Armenian Eastern Alt</key>
+	<dict>
+		<key>TISInputSourceID</key>
+		<string>am.keyboard.armenian.eastern-alt</string>
+		<key>TISIntendedLanguage</key>
+		<string>hy</string>
+	</dict>
+	<key>KLInfo_Armenian Phonetic</key>
+	<dict>
+		<key>TISInputSourceID</key>
+		<string>am.keyboard.armenian.phonetic</string>
+		<key>TISIntendedLanguage</key>
+		<string>hy</string>
+	</dict>
+	<key>KLInfo_Armenian Phonetic Alt</key>
+	<dict>
+		<key>TISInputSourceID</key>
+		<string>am.keyboard.armenian.phonetic-alt</string>
+		<key>TISIntendedLanguage</key>
+		<string>hy</string>
+	</dict>
+	<key>KLInfo_Armenian Standard</key>
+	<dict>
+		<key>TISInputSourceID</key>
+		<string>am.keyboard.armenian.standard</string>
+		<key>TISIntendedLanguage</key>
+		<string>hy</string>
+	</dict>
+	<key>KLInfo_Armenian Western</key>
+	<dict>
+		<key>TISInputSourceID</key>
+		<string>am.keyboard.armenian.western</string>
+		<key>TISIntendedLanguage</key>
+		<string>hy</string>
+	</dict>
+</dict>
+</plist>
