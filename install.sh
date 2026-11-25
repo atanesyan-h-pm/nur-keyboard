@@ -19,7 +19,7 @@ main() {
   # On each release, after pushing the tag, set it to the output of:
   #   curl -fsSL https://github.com/atanesyan-h-pm/nur-keyboard/archive/refs/tags/<tag>.tar.gz | shasum -a 256
   # When empty, the download is installed without checksum verification (with a warning).
-  EXPECTED_SHA256=""
+  EXPECTED_SHA256="1b0f55a16112d4a855b4bd86b60944d29dd6e3c3e780054f0103482deeb80f90"
 
   DEST="$HOME/Library/Keyboard Layouts"
 
