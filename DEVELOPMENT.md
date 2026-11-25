@@ -17,7 +17,8 @@ upstream/                       vendored xkeyboard-config symbols/am + COPYING; 
   SOURCE.md                     where and when it was fetched, with commit hashes
 docs/mapping-tables.md          transcription worksheet: xkb key name → mac keycode → characters
 branding/                       SVG sources for icon, logo and banners
-scripts/                        validate, install, uninstall, icon build
+scripts/                        validate, layout test, install/uninstall wrappers, icon build
+install.sh                      the user installer (curl … | sh); scripts/install.sh wraps it
 ```
 
 Each `KLInfo_<layout name>` entry in `Info.plist` holds:
@@ -70,7 +71,7 @@ Each of these makes macOS silently ignore the layouts or misfile them.
 1. **Never write `&#x0000;`.** NUL is illegal in every XML version, and macOS drops the whole file.
    `scripts/validate.sh` checks this.
 2. **`CFBundleIdentifier` and every `TISInputSourceID` must contain `keyboardlayout`.**
-   `scripts/validate.sh` checks the bundle id; check new input source ids by eye.
+   `scripts/validate.sh` checks the bundle id and every `KLInfo_<name>.TISInputSourceID`.
 3. **Keep the non-Command maps Armenian.** macOS derives a layout's languages from the characters it can
    type outside Command. A Latin Option layer made macOS tag the layouts with ~50 languages instead of
    Armenian.
@@ -81,34 +82,80 @@ Each of these makes macOS silently ignore the layouts or misfile them.
 
 ## Scripts
 
+Only built-in macOS tools are used (`sh`, `bash`, `swift`/`swiftc`, `xmllint`, `plutil`, `iconutil`,
+`shasum`, `xattr`, `curl`, `tar`). `install.sh` is POSIX `#!/bin/sh` (`set -eu`); everything in `scripts/` is
+`#!/bin/bash` with `set -euo pipefail` (except `validate.sh`, see below).
+
 | Script | What it does |
 |---|---|
-| `scripts/validate.sh` | Validates every `.keylayout` against `/System/Library/DTDs/KeyboardLayout.dtd` (on a masked copy: version set to 1.0 and control-character refs replaced, because `xmllint` can't read XML 1.1 control-character refs); fails on NUL refs; `plutil -lint` on the plists and `.strings`; checks layout ids are unique, that each layout has a `KLInfo_<name>` entry and that the bundle id contains `keyboardlayout`. Exit code 0 means all good. |
-| `install.sh` | The user installer (`curl … \| sh`). Piped, it downloads the `main` branch tarball from GitHub and installs its `Nur.bundle`; run as a file from a checkout (`sh install.sh`), it installs the checkout's bundle. `--uninstall` removes it. All code is inside `main()` so a partial download never runs. Users fetch it from GitHub Pages (`https://atanesyan-h-pm.github.io/nur-keyboard/install.sh`), which publishes the `main` branch root, so a push to `main` updates it after the Pages build (about a minute). |
-| `scripts/install.sh` | Copies `Nur.bundle` to `~/Library/Keyboard Layouts` (per user, no sudo), removes the quarantine flag. Also removes the pre-1.0 `Armenian.bundle`. |
-| `scripts/uninstall.sh` | Removes the bundle from `~/Library/Keyboard Layouts`. |
-| `scripts/build-icons.sh` | Renders `branding/icon.svg` into an iconset (16–512 px, @1x and @2x), builds an `.icns` and copies it as `<layout name>.icns` next to each `.keylayout`. |
-| `scripts/svg2png.swift` | Rasterises an SVG to PNG with macOS's built-in SVG support (no third-party tools). Usage: `swift scripts/svg2png.swift in.svg out.png width [height]`. |
+| `scripts/validate.sh` | Static checks. Validates every `.keylayout` against `/System/Library/DTDs/KeyboardLayout.dtd` on a masked copy: the version is set to 1.0 and XML 1.1 control-character references are replaced, because `xmllint` can't read them. The masking covers hex in any case and length (`&#x8;`, `&#x001B;`, `&#x007f;`) and decimal (`&#8;`, `&#127;`). Also: fails on NUL references (`&#x0;`, `&#0;` …); checks each layout has a `KLInfo_<name>` entry whose `TISInputSourceID` contains `keyboardlayout`; `plutil -lint` on the plists and `.strings`; unique layout ids; bundle id contains `keyboardlayout`. Uses `set -uo pipefail` (no `-e`) so every check runs and reports; exit code 0 means all good. |
+| `scripts/test-layouts.swift` | Behavioural test through macOS itself; see [Testing](#testing). |
+| `install.sh` | The user installer (`curl … \| sh`), served from GitHub Pages. Piped, it downloads the release pinned in `VERSION` (a tag, not `main`) to a temp file, checks it against `EXPECTED_SHA256` with `shasum -a 256 -c` (or warns if that's empty), extracts it and installs its `Nur.bundle`. Run as a file named `install.sh` from a checkout (`sh install.sh`, `./install.sh`, via a symlink), it installs the checkout's bundle instead. A piped run never does: `$0` is then the shell's name, so a stray `sh` file in the current folder can't trick it. `--uninstall` removes the bundle. All code is inside `main()` so a partial download never runs. |
+| `scripts/install.sh` | Thin wrapper: `exec sh ../install.sh`, which installs the checkout's bundle. |
+| `scripts/uninstall.sh` | Thin wrapper: `exec sh ../install.sh --uninstall`. |
+| `scripts/build-icons.sh` | Compiles `svg2png.swift` once with `swiftc -O`, renders `branding/icon.svg` into an iconset (16–512 px, @1x and @2x), builds an `.icns` and copies it as `<layout name>.icns` next to each `.keylayout`. |
+| `scripts/svg2png.swift` | Rasterises an SVG to PNG with macOS's built-in SVG support, nearest-neighbour scaling for the pixel icon. Usage: `swift scripts/svg2png.swift in.svg out.png width [height]`. Any bad argument, unreadable image or write error prints to stderr and exits 1; it never writes a blank PNG with exit code 0. |
+
+## Releasing
+
+The live installer downloads a tagged release, so a push to `main` alone doesn't change what users install.
+
+1. Make sure `scripts/validate.sh` and `swift scripts/test-layouts.swift --bundle Nur.bundle` pass.
+2. Tag and push the release: `git tag v1.0.0 && git push origin v1.0.0`.
+3. Compute the tarball checksum:
+   `curl -fsSL https://github.com/atanesyan-h-pm/nur-keyboard/archive/refs/tags/v1.0.0.tar.gz | shasum -a 256`
+4. Set `VERSION` and `EXPECTED_SHA256` in `install.sh` to the tag and that checksum, commit and push to
+   `main`. GitHub Pages republishes `install.sh` in about a minute.
+5. Test the live command: `curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh | sh`.
+
+`install.sh` must never point at a tag that doesn't exist on GitHub yet: the download would fail for every
+user. GitHub generates tag tarballs on the fly; they have been stable in practice, but if the checksum ever
+stops matching for an unchanged tag, re-check it and update `EXPECTED_SHA256`.
 
 ## Changing a key
 
 1. Edit the affected `.keylayout` file(s) **and** `docs/mapping-tables.md` together.
 2. Run `scripts/validate.sh`.
-3. Run `scripts/install.sh`.
-4. Log out and back in (or register the bundle with `TISRegisterInputSource` for a quick test).
-5. Check the result in Keyboard Viewer and by typing in TextEdit.
+3. Run `swift scripts/test-layouts.swift --bundle Nur.bundle` (no logout needed).
+4. Run `scripts/install.sh`, log out and back in, and check the result in Keyboard Viewer and by typing in
+   TextEdit.
 
 ## Testing
 
-Verification is done against what macOS itself does with the installed layouts, not against the XML:
+`scripts/test-layouts.swift` checks what macOS itself types with each layout, not what the XML says:
 
-- For each installed Nur input source, read its `kTISPropertyUnicodeKeyLayoutData`.
-- Call `UCKeyTranslate` for every key code and modifier combination (base, Shift, Caps Lock, Option,
-  Shift+Option, Command).
-- Compare the output with `docs/mapping-tables.md`.
+```bash
+swift scripts/test-layouts.swift                      # the installed bundle, as macOS has it loaded
+swift scripts/test-layouts.swift --bundle Nur.bundle  # the checkout's files, no install or logout needed
+```
 
-Last run: 6 layouts, 1713 key/modifier pairs including Option and Command, 0 mismatches.
-There is no test script in the repo yet.
+For every Nur input source it reads `kTISPropertyUnicodeKeyLayoutData` and calls `UCKeyTranslate` for every
+key in `docs/mapping-tables.md` with base, Shift, Caps Lock, Option, Shift+Option and Command. The
+expected values come from the tables:
+
+- base and Shift are the cell's two characters;
+- Caps Lock gives the Shift character for letters (when it's the base letter's capital), base otherwise;
+- Option and Shift+Option equal base and Shift;
+- Command is the US QWERTY character.
+
+Every mismatch is printed with layout, xkb key, key code, modifier, and expected vs. actual. The exit status
+is 1 on any mismatch or a missing layout. Current result: 6 layouts, 1713 key/modifier pairs, 0 mismatches.
+
+Without `--bundle` it tests the installed `~/Library/Keyboard Layouts/Nur.bundle` (or the checkout's, if
+nothing is installed), and warns if the installed copy differs from the checkout.
+
+With `--bundle`, the files are tested through a temporary copy,
+`~/Library/Keyboard Layouts/NurTest-<random>.bundle`, registered with `TISRegisterInputSource`. The copy gets
+a unique bundle id, unique `TISInputSourceID`s and unique numeric layout ids. macOS needs all three before it
+compiles the files fresh:
+
+- It caches input sources by id: a changed bundle registered under the installed ids silently returns the
+  old layouts.
+- It rejects layouts whose numeric id is already loaded.
+- It only registers bundles inside a Keyboard Layouts folder.
+
+The copy is deleted on exit and on Ctrl-C, and leftovers from a killed run are removed at the next start.
+macOS remembers the temporary sources until you log out; they are never enabled.
 
 ### Manual release checks
 

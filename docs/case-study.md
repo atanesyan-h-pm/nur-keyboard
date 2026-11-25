@@ -149,10 +149,12 @@ interface **հյ Նուռ Ստանդարտ …** (full list in the [README](../R
 
 - **`Nur.bundle`**: `Info.plist` with a `KLInfo` entry per layout (input source id, language `hy`, colour
   icon), English and Armenian display names (`en.lproj`, `hy.lproj`), and one `.icns` per layout.
-- **Installer** ([`install.sh`](../install.sh)): downloads the `main` branch, copies `Nur.bundle` to
+- **Installer** ([`install.sh`](../install.sh)): downloads a pinned release tag (verified with SHA-256 when a
+  checksum is set), copies `Nur.bundle` to
   `~/Library/Keyboard Layouts`, removes the quarantine flag, prints the next steps. `--uninstall` removes it.
   All code sits inside `main()`, so a partially downloaded script never runs.
-- **Maintainer tooling**: [`scripts/validate.sh`](../scripts/validate.sh), `scripts/build-icons.sh` (SVG →
+- **Maintainer tooling**: [`scripts/validate.sh`](../scripts/validate.sh),
+  [`scripts/test-layouts.swift`](../scripts/test-layouts.swift) (every key through macOS), `scripts/build-icons.sh` (SVG →
   `.icns`) and `scripts/svg2png.swift` (SVG → PNG with macOS's own renderer). Details in
   [DEVELOPMENT.md](../DEVELOPMENT.md).
 
@@ -192,7 +194,7 @@ in System Settings. The design goal was to make each step obvious.
 |---|---|---|
 | 1. Static checks | `scripts/validate.sh`: Apple KeyboardLayout DTD (on a masked copy, because `xmllint` can't read XML 1.1 control-character references), NUL check, `plutil -lint`, unique ids, a `KLInfo` entry per layout, bundle id contains `keyboardlayout` | Passes |
 | 2. Offline parse vs worksheet | Each `.keylayout` parsed and compared with [mapping-tables.md](mapping-tables.md) | 1431 key/modifier pairs, 0 errors |
-| 3. Through macOS | Installed layouts registered with `TISRegisterInputSource`, every key translated with `UCKeyTranslate` (base, Shift, Caps Lock, Option, Shift+Option, Command) | 6 layouts, 1713 pairs, 0 mismatches |
+| 3. Through macOS | [`scripts/test-layouts.swift`](../scripts/test-layouts.swift): layouts registered with `TISRegisterInputSource`, every key translated with `UCKeyTranslate` (base, Shift, Caps Lock, Option, Shift+Option, Command) | 6 layouts, 1713 pairs, 0 mismatches |
 | 4. Real use | Keyboard Viewer, typing in TextEdit, Cmd shortcuts, after log out / in | Listed as manual release checks in [DEVELOPMENT.md](../DEVELOPMENT.md#manual-release-checks) |
 | Installer | Piped from the real GitHub Pages URL into a throwaway `HOME` | Installs a bundle identical to the repo's; `--uninstall` removes it |
 
@@ -200,7 +202,7 @@ Level 3 matters most: it tests what macOS actually types, not what the XML says.
 while the layouts were still invisible on the Mac (iteration 1), which is why the validator gained checks
 for the rules learned later.
 
-**Gaps.** The level 3 test is not yet a script in the repo. Level 4 is a checklist, not a recorded run.
+**Gaps.** Level 4 is a checklist, not a recorded run.
 Nothing has been tested with other people, on ISO keyboards or on other macOS versions.
 
 ## 6. Launch
@@ -261,7 +263,6 @@ opt-in feedback.
 | Real screenshots per macOS version, alongside the drawings | Matching what users actually see |
 | Armenian-language user guide | Users who prefer to read in Armenian |
 | Interviews with Linux → Mac switchers who type Armenian | Validating the user assumptions from stage 1 |
-| Turning the `UCKeyTranslate` check into a script in the repo | Repeatable level-3 validation for contributors |
 
 ## Lessons learned
 

@@ -1,11 +1,6 @@
 #!/bin/bash
-# Install the bundle for the current user (no sudo needed).
+# Install this checkout's Nur.bundle for the current user.
+# Thin wrapper: all install logic lives in ../install.sh, which installs the local bundle
+# (no download) when run as a file from a checkout.
 set -euo pipefail
-cd "$(dirname "$0")/.."
-DEST="$HOME/Library/Keyboard Layouts"
-mkdir -p "$DEST"
-rm -rf "$DEST/Nur.bundle" "$DEST/Armenian.bundle"  # Armenian.bundle = pre-1.0 name
-cp -R Nur.bundle "$DEST/"
-xattr -dr com.apple.quarantine "$DEST/Nur.bundle" 2>/dev/null || true
-echo "Installed to $DEST/Nur.bundle"
-echo "Log out and back in, then add the layouts in System Settings > Keyboard > Input Sources > Edit > + > Armenian."
+exec sh "$(dirname "$0")/../install.sh" "$@"

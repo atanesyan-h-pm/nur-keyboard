@@ -1,5 +1,5 @@
 #!/bin/bash
-# Remove the bundle. Remove the layouts from Input Sources first, then log out and back in.
+# Remove Nur for the current user. Remove the layouts from Input Sources first, then log out and back in.
+# Thin wrapper around ../install.sh --uninstall.
 set -euo pipefail
-rm -rf "$HOME/Library/Keyboard Layouts/Nur.bundle" "$HOME/Library/Keyboard Layouts/Armenian.bundle"
-echo "Removed. Log out and back in to finish."
+exec sh "$(dirname "$0")/../install.sh" --uninstall
