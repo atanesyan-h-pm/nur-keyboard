@@ -108,6 +108,12 @@ Log out and log back in once more. If they are still missing, macOS may be using
 
 3. Log out and log back in.
 
+**macOS says "The developer can access anything you type".**
+macOS shows this message for every keyboard that doesn't come from Apple, and it can't be turned off.
+Nur can't see or send what you type: it contains no program code, only tables that say which key types which
+letter (the `.keylayout` files in [Nur.bundle](Nur.bundle/Contents/Resources)). It doesn't use the
+internet either. You can read every file in this repository.
+
 **Caps Lock switches the keyboard instead of typing capitals.**
 In System Settings › Keyboard › Text Input › Input Sources › Edit…, turn off
 **Use the Caps Lock key to switch to and from …**.

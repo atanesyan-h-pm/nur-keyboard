@@ -232,7 +232,7 @@ Six problems appeared only when the layouts met a real Mac. They are listed in t
 | 2 | Layouts not visible under Armenian in the Input Sources "+" picker | (a) They had been auto-enabled, and macOS hides enabled sources from the "+" list. (b) The Latin Option layer made macOS tag each layout with about 50 languages instead of Armenian. | Option layer types Armenian, so the only language is `hy`. Stopped auto-enabling. |
 | 3 | Icon unreadable in dark mode in the 🌐 (fn) switcher | The template-icon flag is not honoured there. | Colour pomegranate with a cream outline, readable on light and dark. |
 | 4 | After renaming, the keyboard became inactive in the running session | The session had loaded the old names; new names load only at login. | Re-enabled the six layouts in the saved input-source settings; documented that layout changes need a log out and in. |
-| 5 | Warning in Input Sources: "The developer can access anything you type" | macOS shows it for every non-Apple input source. Nur has no code, only key tables, so it cannot read typing. | Answered with an explanation instead of a code change; the warning cannot be removed. Not yet covered in the README (see roadmap). |
+| 5 | Warning in Input Sources: "The developer can access anything you type" | macOS shows it for every non-Apple input source. Nur has no code, only key tables, so it cannot read typing. | Answered with an explanation instead of a code change, now in the README's Troubleshooting section; the warning itself cannot be removed. |
 | 6 | Install too hard for non-technical users | The first install path was `git clone` plus a script. | One-line `curl \| sh` installer on GitHub Pages, plus drawn step pictures. |
 
 These rules now live in [DEVELOPMENT.md](../DEVELOPMENT.md#macos-rules-learned-the-hard-way) and, where
@@ -261,7 +261,6 @@ opt-in feedback.
 | Real screenshots per macOS version, alongside the drawings | Matching what users actually see |
 | Armenian-language user guide | Users who prefer to read in Armenian |
 | Interviews with Linux → Mac switchers who type Armenian | Validating the user assumptions from stage 1 |
-| README troubleshooting entry for the "developer can access anything you type" warning | Users worried by the warning (iteration 5) |
 | Turning the `UCKeyTranslate` check into a script in the repo | Repeatable level-3 validation for contributors |
 
 ## Lessons learned
@@ -280,6 +279,6 @@ opt-in feedback.
    installing, logging out and finding the right settings. One command and drawn pictures did more for
    non-technical users than any key-map change.
 7. **Some problems are answered with words.** The "developer can access anything you type" warning can't
-   be removed; a clear explanation is the fix, and it belongs in the user guide.
+   be removed; a clear explanation is the fix, and it is now in the user guide.
 8. **Without data, label assumptions.** The only user so far is the author. The next round of the loop
    starts with talking to other users.
