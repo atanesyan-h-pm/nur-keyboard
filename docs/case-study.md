@@ -215,7 +215,10 @@ Nothing has been tested with other people, on ISO keyboards or on other macOS ve
   curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh | sh
   ```
 
-  A push to `main` updates what users get. Uninstall is the same line with `-s -- --uninstall`.
+  It installs a pinned, checksum-verified release tag, so a push to `main` alone doesn't change what users
+  get. Uninstall is the same line with `-s -- --uninstall`; `--clear-cache` fixes layouts that don't show up.
+- **Finder install (v1.1)**: `Nur.bundle.zip` attached to each GitHub Release, for people who don't use
+  Terminal: download, ⌘⇧G to `~/Library/Keyboard Layouts`, drag the bundle in.
 - **Per-user install**, no administrator password, no signing or notarisation needed because there is no
   executable code.
 - **README as landing page**: banner, plain-language explanation, picture guide.
@@ -240,6 +243,18 @@ Six problems appeared only when the layouts met a real Mac. They are listed in t
 These rules now live in [DEVELOPMENT.md](../DEVELOPMENT.md#macos-rules-learned-the-hard-way) and, where
 possible, in `scripts/validate.sh`.
 
+### v1.1: a UX pass
+
+After the first round, a review of the end-user experience found five more gaps, all fixed in v1.1:
+
+| Gap | Fix |
+|---|---|
+| Six layouts, one icon: the menu bar didn't show which one was on | Per-layout icons: seed colour = family, a stripe through the eye = Alt. At true 16 px a 4-knot bar was too subtle between Eastern and Eastern Alt, so the stripe was widened to split the eye. |
+| Six layouts and no guidance | A "Best for" column and one recommendation for newcomers (Phonetic) |
+| Installing needed Terminal | A Finder path with `Nur.bundle.zip` from GitHub Releases, plus a drawn picture |
+| Uninstall said "remove the layouts in Settings" after deleting them | The installer checks for enabled layouts first and waits until they're removed; upgrades name any old entries that would be left as ghosts |
+| Troubleshooting asked users to type `rm -f` on a system cache path | `install.sh --clear-cache`; the cache is also cleared on install and uninstall |
+
 ### What to measure next (proposals)
 
 Nur collects no data, so every metric below is a **proposal** and has to come from public signals or
@@ -257,7 +272,7 @@ opt-in feedback.
 
 | Idea | Addresses |
 |---|---|
-| Signed `.pkg` installer | Users who won't use Terminal |
+| Signed `.pkg` installer | A double-click install (v1.1's Finder zip already avoids Terminal, but needs a manual drag) |
 | Homebrew cask | Developers and people who manage apps with Homebrew |
 | Testing on ISO keyboards (key codes 10/50 may swap) | Correctness outside ANSI keyboards |
 | Real screenshots per macOS version, alongside the drawings | Matching what users actually see |

@@ -14,29 +14,34 @@ one of them, your fingers will feel at home.
 
 ## The six layouts
 
-After installing, you will find these in your Mac's keyboard settings. If your Mac's language is set to
-Armenian, they show their Armenian names instead.
+**New to typing Armenian on a Mac? Start with AM Nur Phonetic:** if you know where the English letters are,
+you already know most of it.
 
-| Name in English | Name in Armenian | Linux name (xkeyboard-config) |
+| | Layout | Best for |
 |---|---|---|
-| AM Nur Standard | հյ Նուռ Ստանդարտ | Armenian |
-| AM Nur Phonetic | հյ Նուռ Հնչյունային | Armenian (phonetic) |
-| AM Nur Phonetic Alt | հյ Նուռ Հնչյունային 2 | Armenian (alt. phonetic) |
-| AM Nur Eastern | հյ Նուռ Արևելյան | Armenian (eastern) |
-| AM Nur Western | հյ Նուռ Արևմտյան | Armenian (western) |
-| AM Nur Eastern Alt | հյ Նուռ Արևելյան 2 | Armenian (alt. eastern) |
+| <img src="branding/icons/phonetic.svg" alt="" width="32"> | **AM Nur Phonetic**<br>հյ Նուռ Հնչյունային | **Most people.** Armenian letters sit on the English keys that sound alike: ա on A, ս on S, դ on D. |
+| <img src="branding/icons/phonetic-alt.svg" alt="" width="32"> | **AM Nur Phonetic Alt**<br>հյ Նուռ Հնչյունային 2 | Phonetic typists who expect **R** to type ռ (and **8** to type ր). |
+| <img src="branding/icons/standard.svg" alt="" width="32"> | **AM Nur Standard**<br>հյ Նուռ Ստանդարտ | Touch typists who learned the classic Armenian typewriter layout (ճ փ բ ս մ on the top row). It's the default "Armenian" layout on Linux. |
+| <img src="branding/icons/eastern.svg" alt="" width="32"> | **AM Nur Eastern**<br>հյ Նուռ Արևելյան | People coming from the Windows "Armenian Eastern" keyboard, with its G/C mix-up fixed (G types գ). |
+| <img src="branding/icons/eastern-alt.svg" alt="" width="32"> | **AM Nur Eastern Alt**<br>հյ Նուռ Արևելյան 2 | Fingers trained on Windows XP's "Armenian Eastern" exactly as it was (G types ք, C types գ). |
+| <img src="branding/icons/western.svg" alt="" width="32"> | **AM Nur Western**<br>հյ Նուռ Արևմտյան | Western Armenian speakers coming from the Windows "Armenian Western" keyboard. |
 
-Not sure which one you want? Add a few and try them. You can [see every key](docs/mapping-tables.md) of every layout.
+If your Mac's language is Armenian, the layouts show their Armenian names. Still not sure? Add two and try
+them, or [see every key](docs/mapping-tables.md) of every layout.
 
-In the menu bar, each layout shows a small pixel pomegranate: red with a golden crown and seeds. It is easy
-to see in both light and dark mode.
+Each layout has its own seed colour in the menu bar, so you can see at a glance which one is on. The
+Alt layouts have a stripe through the middle. The icons are easy to see in both light and dark mode.
 
 ## Install
 
 You need a Mac with macOS. Both Apple Silicon (M1, M2, …) and Intel Macs work. You don't need an
 administrator password.
 
-### 1. Run the installer
+### 1. Put Nur on your Mac
+
+Pick one of the two ways. Both put the same files in the same place.
+
+#### Option A: Terminal (fastest)
 
 Open the **Terminal** app (in Applications › Utilities), paste this line and press Return:
 
@@ -49,6 +54,21 @@ Library folder. It only affects your user account. Want to see what it does firs
 [install.sh](install.sh).
 
 <img src="docs/images/step-1-terminal.svg" alt="Terminal with the install command pasted and the 'Nur is installed' message" width="720">
+
+#### Option B: Finder (no Terminal)
+
+1. Download **[Nur.bundle.zip](https://github.com/atanesyan-h-pm/nur-keyboard/releases/latest/download/Nur.bundle.zip)**.
+2. Open your **Downloads** folder and double-click **Nur.bundle.zip** to unzip it. Safari may already have
+   done this for you.
+3. In Finder, press **⌘ Command + ⇧ Shift + G**, type `~/Library/Keyboard Layouts` and press Return.
+   If Finder says it can't find the folder, go to `~/Library` instead, choose File › New Folder, and name it
+   exactly `Keyboard Layouts`.
+4. Drag **Nur.bundle** into that window. If Finder asks, choose **Replace**.
+
+<img src="docs/images/step-1b-finder.svg" alt="Finder's Go to Folder with ~/Library/Keyboard Layouts typed in, and Nur.bundle being dragged from Downloads into the Keyboard Layouts folder" width="720">
+
+If the layouts don't appear after you log back in (step 2), use Option A once: it does the same thing and also
+clears the download flag macOS puts on files from the internet.
 
 ### 2. Log out and log back in
 
@@ -97,16 +117,19 @@ Once you have more than one input source, you can switch in any of these ways:
 ## Troubleshooting
 
 **The layouts don't appear in the list after I log in.**
-Log out and log back in once more. If they are still missing, macOS may be using an old cache:
+Log out and log back in once more. If they are still missing, macOS may be using an old copy of its keyboard
+list. Clear it by pasting this into Terminal:
 
-1. In Terminal, run `getconf DARWIN_USER_CACHE_DIR`. It prints a folder like `/var/folders/xx/xxxx/C/`.
-2. Delete the cache files in that folder:
+```bash
+curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh | sh -s -- --clear-cache
+```
 
-   ```bash
-   rm -f "$(getconf DARWIN_USER_CACHE_DIR)"com.apple.IntlDataCache.le*
-   ```
+Then log out and log back in.
 
-3. Log out and log back in.
+**After updating, a layout shows up but I can't switch to it.**
+An older Nur layout is still turned on under a name that no longer exists. The installer tells you which ones.
+Open System Settings › Keyboard › Text Input › Input Sources › **Edit…**, remove the old Nur entries with
+**−**, then click **+** › **Armenian** and add the **AM Nur …** layouts again.
 
 **macOS says "The developer can access anything you type".**
 macOS shows this message for every keyboard that doesn't come from Apple, and it can't be turned off.
@@ -124,15 +147,19 @@ and the key left of **Z**. This comes from macOS, not from Nur.
 
 ## Uninstall
 
-1. Open System Settings › Keyboard › Text Input › Input Sources › **Edit…**.
-2. Select each **AM Nur …** layout and click the **−** button.
-3. In Terminal, run:
+Do these in order, so no broken entries are left behind:
+
+1. **Remove the layouts:** open System Settings › Keyboard › Text Input › Input Sources › **Edit…**, select each
+   **AM Nur …** layout and click the **−** button.
+2. **Delete Nur.** In Terminal, run:
 
    ```bash
    curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh | sh -s -- --uninstall
    ```
 
-4. Log out and log back in.
+   Or without Terminal: in Finder press **⌘ Command + ⇧ Shift + G**, type `~/Library/Keyboard Layouts`, press
+   Return, and drag **Nur.bundle** to the Trash.
+3. **Log out and log back in.**
 
 ## Compatibility
 

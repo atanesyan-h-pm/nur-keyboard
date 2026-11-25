@@ -48,6 +48,15 @@ for f in Nur.bundle/Contents/Resources/*.keylayout; do
     "") echo "FAIL  KLInfo_$n has no TISInputSourceID"; fail=1 ;;
     *)  echo "FAIL  KLInfo_$n.TISInputSourceID '$sid' must contain 'keyboardlayout'"; fail=1 ;;
   esac
+
+  # Each layout has its own icon: an SVG source named after the TISInputSourceID suffix
+  # (built by scripts/build-icons.sh) and the .icns macOS shows next to the .keylayout.
+  if [ -n "$sid" ] && [ ! -f "branding/icons/${sid##*.}.svg" ]; then
+    echo "FAIL  no branding/icons/${sid##*.}.svg for $n"; fail=1
+  fi
+  if [ ! -f "${f%.keylayout}.icns" ]; then
+    echo "FAIL  no ${f%.keylayout}.icns (run scripts/build-icons.sh)"; fail=1
+  fi
 done
 
 for p in Nur.bundle/Contents/*.plist Nur.bundle/Contents/Resources/*.lproj/*.strings; do
