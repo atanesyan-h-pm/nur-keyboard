@@ -6,12 +6,17 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+# dist/ must never hold a zip that doesn't match the current tree: remove the previous one before
+# anything else, and delete a half-made or unverified one if any later step fails.
+out="$PWD/dist/Nur.bundle.zip"
+rm -f "$out"
+tmp=""
+trap 'rc=$?; [ -n "$tmp" ] && rm -rf "$tmp"; [ $rc -eq 0 ] || rm -f "$out"' EXIT
+
 scripts/validate.sh >/dev/null || { echo "package-release: scripts/validate.sh failed; fix that first" >&2; exit 1; }
 
-out="$PWD/dist/Nur.bundle.zip"
 mkdir -p dist
-rm -f "$out"
-tmp=$(mktemp -d); trap 'rm -rf "$tmp"' EXIT
+tmp=$(mktemp -d)
 
 # Clean staging copy.
 cp -R Nur.bundle "$tmp/"

@@ -72,15 +72,35 @@ main() {
   # Names of enabled Nur entries (by id or name) that have no layout file in the installed bundle:
   # entries left over from an older version with different names. macOS lists them, but they can't
   # be selected. One name per line.
+  #
+  # `defaults read` prints an old-style plist with non-ASCII text escaped (\U0570…) and quotes
+  # backslashed; plutil turns it into XML with real UTF-8, so the names shown to the user are readable.
+  # If plutil can't parse it, fall back to reading the old-style text directly.
   stale_entries() {
-    defaults read com.apple.HIToolbox AppleEnabledInputSources 2>/dev/null | awk '
-      /\{/ { id = ""; name = "" }
-      /"KeyboardLayout ID" =/   { id = $0;   sub(/.*= *"?/, "", id);   sub(/"?;.*/, "", id) }
-      /"KeyboardLayout Name" =/ { name = $0; sub(/.*= *"?/, "", name); sub(/"?;.*/, "", name) }
-      /\}/ { if (name != "" && (id ~ /^-2100[0-9]+$/ || name ~ /Nur/)) print name }' \
-    | while IFS= read -r n; do
-        [ -f "$DEST/Nur.bundle/Contents/Resources/$n.keylayout" ] || echo "$n"
-      done
+    raw=$(defaults read com.apple.HIToolbox AppleEnabledInputSources 2>/dev/null) || raw=""
+    [ -n "$raw" ] || return 0
+    if xml=$(printf '%s\n' "$raw" | plutil -convert xml1 -o - - 2>/dev/null); then
+      printf '%s\n' "$xml" | awk '
+        /<dict>/ { id = ""; name = ""; key = "" }
+        /<key>/  { key = $0; sub(/.*<key>/, "", key); sub(/<\/key>.*/, "", key); next }
+        /<(string|integer)>/ {
+          v = $0; sub(/.*<(string|integer)>/, "", v); sub(/<\/(string|integer)>.*/, "", v)
+          if (key == "KeyboardLayout ID") id = v
+          if (key == "KeyboardLayout Name") {
+            gsub(/&lt;/, "<", v); gsub(/&gt;/, ">", v); gsub(/&quot;/, "\"", v); gsub(/&apos;/, "'"'"'", v); gsub(/&amp;/, "\\&", v)
+            name = v
+          }
+        }
+        /<\/dict>/ { if (name != "" && (id ~ /^-2100[0-9]+$/ || name ~ /Nur/)) print name }'
+    else
+      printf '%s\n' "$raw" | awk '
+        /\{/ { id = ""; name = "" }
+        /"KeyboardLayout ID" =/   { id = $0;   sub(/.*= *"?/, "", id);   sub(/"?;.*/, "", id) }
+        /"KeyboardLayout Name" =/ { name = $0; sub(/.*= *"?/, "", name); sub(/"?;.*/, "", name) }
+        /\}/ { if (name != "" && (id ~ /^-2100[0-9]+$/ || name ~ /Nur/)) print name }'
+    fi | while IFS= read -r n; do
+      [ -f "$DEST/Nur.bundle/Contents/Resources/$n.keylayout" ] || echo "$n"
+    done
   }
 
   # Can we talk to the user? Piped from curl, stdin is the script, so prompts read /dev/tty.

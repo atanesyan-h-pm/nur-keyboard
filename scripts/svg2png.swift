@@ -52,6 +52,16 @@ NSGraphicsContext.restoreGraphicsState()
 guard let png = rep.representation(using: .png, properties: [:]) else {
     fail("cannot encode PNG")
 }
+// Check the destination folder first: Foundation's own message for a missing folder names the file
+// ("The folder “x.png” doesn't exist"), which points at the wrong thing.
+let outputDir = outputURL.deletingLastPathComponent().path
+var isDir: ObjCBool = false
+guard FileManager.default.fileExists(atPath: outputDir, isDirectory: &isDir), isDir.boolValue else {
+    fail("cannot write \(outputURL.path): folder \(outputDir) doesn't exist")
+}
+guard FileManager.default.isWritableFile(atPath: outputDir) else {
+    fail("cannot write \(outputURL.path): folder \(outputDir) isn't writable")
+}
 do {
     try png.write(to: outputURL, options: .atomic)
 } catch {
