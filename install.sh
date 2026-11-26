@@ -15,12 +15,12 @@ main() {
 
   # Release to download. Pinned to a tag (not the moving main branch) so every user gets the same,
   # reviewed files.
-  VERSION="v1.1.0"
+  VERSION="v1.1.1"
   # SHA-256 of https://github.com/$REPO/archive/refs/tags/$VERSION.tar.gz.
   # On each release, after pushing the tag, set it to the output of:
   #   curl -fsSL https://github.com/atanesyan-h-pm/nur-keyboard/archive/refs/tags/<tag>.tar.gz | shasum -a 256
   # When empty, the download is installed without checksum verification (with a warning).
-  EXPECTED_SHA256="da66baa44287dcc23ddc70377f4b58f1052150b46d6112e96b13a245276f0a1a"
+  EXPECTED_SHA256="013fefc34940eed477f5d5086642524daa9dcc064f7dfe4de5e0b2caa46a40cd"
 
   DEST="$HOME/Library/Keyboard Layouts"
   SETTINGS="System Settings > Keyboard > Text Input > Input Sources > Edit…"
