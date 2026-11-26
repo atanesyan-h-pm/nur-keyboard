@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 516" width="760" height="516">
+<title>QA method: isolation with a temporary HOME and stubs, seven test suites with case counts, triage of 136 results, then fix, regression, release and live verification</title>
+<rect width="760" height="516" rx="16" fill="#F4EAD5"/>
+<g font-family="-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif">
+<g transform="translate(24 20) scale(2)" shape-rendering="crispEdges"><path fill="#A3232F" d="M6 5h4v1h-4zM4 6h8v1h-8zM3 7h10v1h-10zM2 8h5v1h-5zM9 8h5v1h-5zM2 9h4v1h-4zM10 9h4v1h-4zM2 10h3v1h-3zM11 10h3v1h-3zM2 11h4v1h-4zM10 11h4v1h-4zM2 12h5v1h-5zM9 12h5v1h-5zM3 13h10v1h-10zM4 14h8v1h-8z"/><path fill="#D49A2E" d="M4 2h1v1h-1zM7 2h2v1h-2zM11 2h1v1h-1zM4 3h2v1h-2zM7 3h2v1h-2zM10 3h2v1h-2zM5 4h6v1h-6zM7 9h2v1h-2zM6 10h4v1h-4zM7 11h2v1h-2z"/></g><text xml:space="preserve" x="64" y="42" font-size="20" font-weight="700" fill="#1E2747" text-anchor="start">Release QA: how v1.1.0 was verified</text><text xml:space="preserve" x="64" y="62" font-size="13" font-weight="400" fill="#5B3A29" text-anchor="start">Isolate everything, run 7 suites, triage honestly, fix, then verify the live release</text>
+<text xml:space="preserve" x="24" y="98" font-size="12" font-weight="700" fill="#A3232F" text-anchor="start">1  ISOLATE</text>
+<rect x="24" y="108" width="224" height="212" rx="8" fill="#FFFFFF" stroke="#A3232F" stroke-width="1.5"/>
+<text xml:space="preserve" x="38" y="130" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">Temporary HOME and TMPDIR</text><text xml:space="preserve" x="38" y="145" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">Stubs on PATH:</text><text xml:space="preserve" x="38" y="160" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">• defaults → fixture; anything</text><text xml:space="preserve" x="48" y="175" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">else exits 99 (fails loudly)</text><text xml:space="preserve" x="38" y="190" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">• getconf → fake cache (a temp</text><text xml:space="preserve" x="48" y="205" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">HOME alone would still clear</text><text xml:space="preserve" x="48" y="220" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">the real IntlDataCache)</text><text xml:space="preserve" x="38" y="235" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">• curl → local tag tarball</text><text xml:space="preserve" x="48" y="250" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">(suite 4 fully offline)</text><text xml:space="preserve" x="38" y="265" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">Guards after every suite:</text><text xml:space="preserve" x="48" y="280" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">layouts folder, input sources,</text><text xml:space="preserve" x="48" y="295" font-size="12" font-weight="400" fill="#5B3A29" text-anchor="start">cache, repo, temp dirs</text>
+<line x1="248" y1="214" x2="264" y2="214" stroke="#5B3A29" stroke-width="2"/><polygon points="270,214 263,210 263,218" fill="#5B3A29"/>
+<text xml:space="preserve" x="270" y="98" font-size="12" font-weight="700" fill="#A3232F" text-anchor="start">2  RUN 7 SUITES (v1.1.0)</text>
+<rect x="270" y="108" width="220" height="26" rx="8" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<text xml:space="preserve" x="282" y="125" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">1  Static &amp; schema</text>
+<text xml:space="preserve" x="480" y="125" font-size="12" font-weight="700" fill="#5B3A29" text-anchor="end">23</text>
+<rect x="270" y="138" width="220" height="26" rx="8" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<text xml:space="preserve" x="282" y="155" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">2  UCKeyTranslate</text>
+<text xml:space="preserve" x="480" y="155" font-size="12" font-weight="700" fill="#5B3A29" text-anchor="end">6</text>
+<rect x="270" y="168" width="220" height="26" rx="8" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<text xml:space="preserve" x="282" y="185" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">3  Icons &amp; visuals</text>
+<text xml:space="preserve" x="480" y="185" font-size="12" font-weight="700" fill="#5B3A29" text-anchor="end">20</text>
+<rect x="270" y="198" width="220" height="26" rx="8" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<text xml:space="preserve" x="282" y="215" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">4  Installer matrix</text>
+<text xml:space="preserve" x="480" y="215" font-size="12" font-weight="700" fill="#5B3A29" text-anchor="end">37</text>
+<rect x="270" y="228" width="220" height="26" rx="8" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<text xml:space="preserve" x="282" y="245" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">5  Packaging &amp; quarantine</text>
+<text xml:space="preserve" x="480" y="245" font-size="12" font-weight="700" fill="#5B3A29" text-anchor="end">10</text>
+<rect x="270" y="258" width="220" height="26" rx="8" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<text xml:space="preserve" x="282" y="275" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">6  Edge cases</text>
+<text xml:space="preserve" x="480" y="275" font-size="12" font-weight="700" fill="#5B3A29" text-anchor="end">25</text>
+<rect x="270" y="288" width="220" height="26" rx="8" fill="#FFFFFF" stroke="#D2D2D7" stroke-width="1"/>
+<text xml:space="preserve" x="282" y="305" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">7  Published artifacts</text>
+<text xml:space="preserve" x="480" y="305" font-size="12" font-weight="700" fill="#5B3A29" text-anchor="end">8</text>
+<text xml:space="preserve" x="270" y="334" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">+ negative controls: a wrong table and a</text>
+<text xml:space="preserve" x="270" y="349" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">broken layout must FAIL (no false pass)</text>
+<line x1="490" y1="214" x2="506" y2="214" stroke="#5B3A29" stroke-width="2"/><polygon points="512,214 505,210 505,218" fill="#5B3A29"/>
+<text xml:space="preserve" x="512" y="98" font-size="12" font-weight="700" fill="#A3232F" text-anchor="start">3  TRIAGE 136 RESULTS</text>
+<rect x="512" y="108" width="224" height="32" rx="8" fill="#FFFFFF" stroke="#1F7A3A" stroke-width="1.5"/>
+<text xml:space="preserve" x="530" y="129" font-size="15" font-weight="700" fill="#1F7A3A" text-anchor="start">133</text>
+<text xml:space="preserve" x="566" y="129" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">PASS</text>
+<rect x="512" y="148" width="224" height="32" rx="8" fill="#FFFFFF" stroke="#A3232F" stroke-width="1.5"/>
+<text xml:space="preserve" x="530" y="169" font-size="15" font-weight="700" fill="#A3232F" text-anchor="start">1</text>
+<text xml:space="preserve" x="566" y="169" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">product defect (D1)</text>
+<rect x="512" y="188" width="224" height="32" rx="8" fill="#FFFFFF" stroke="#D49A2E" stroke-width="1.5"/>
+<text xml:space="preserve" x="530" y="209" font-size="15" font-weight="700" fill="#D49A2E" text-anchor="start">2</text>
+<text xml:space="preserve" x="566" y="209" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">cosmetic (O1, O2)</text>
+<rect x="512" y="228" width="224" height="32" rx="8" fill="#FFFFFF" stroke="#1E2747" stroke-width="1.5"/>
+<text xml:space="preserve" x="530" y="249" font-size="15" font-weight="700" fill="#1E2747" text-anchor="start">2</text>
+<text xml:space="preserve" x="566" y="249" font-size="12" font-weight="400" fill="#1E2747" text-anchor="start">harness bugs, fixed</text>
+<text xml:space="preserve" x="512" y="284" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">Each failure: exact command, exit code,</text><text xml:space="preserve" x="512" y="299" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">output and root cause; nothing fixed</text><text xml:space="preserve" x="512" y="314" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">during the run.</text>
+<text xml:space="preserve" x="24" y="392" font-size="12" font-weight="700" fill="#A3232F" text-anchor="start">4  FIX → REGRESS → RELEASE → VERIFY LIVE</text>
+<rect x="24" y="404" width="132" height="62" rx="8" fill="#FFFFFF" stroke="#A3232F" stroke-width="1.5"/>
+<text xml:space="preserve" x="36" y="426" font-size="13" font-weight="700" fill="#1E2747" text-anchor="start">v1.1.1 fixes</text>
+<text xml:space="preserve" x="36" y="444" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">D1, O1, O2</text><text xml:space="preserve" x="36" y="458" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">+ 5 new checks</text>
+<line x1="156" y1="435" x2="164" y2="435" stroke="#5B3A29" stroke-width="2"/><polygon points="170,435 163,431 163,439" fill="#5B3A29"/>
+<rect x="170" y="404" width="132" height="62" rx="8" fill="#FFFFFF" stroke="#1E2747" stroke-width="1.5"/>
+<text xml:space="preserve" x="182" y="426" font-size="13" font-weight="700" fill="#1E2747" text-anchor="start">Regression</text>
+<text xml:space="preserve" x="182" y="444" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">147 rows: 140 PASS,</text><text xml:space="preserve" x="182" y="458" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">5 expected pre-release</text>
+<line x1="302" y1="435" x2="310" y2="435" stroke="#5B3A29" stroke-width="2"/><polygon points="316,435 309,431 309,439" fill="#5B3A29"/>
+<rect x="316" y="404" width="132" height="62" rx="8" fill="#FFFFFF" stroke="#1E2747" stroke-width="1.5"/>
+<text xml:space="preserve" x="328" y="426" font-size="13" font-weight="700" fill="#1E2747" text-anchor="start">Publish</text>
+<text xml:space="preserve" x="328" y="444" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">tag, release, pin,</text><text xml:space="preserve" x="328" y="458" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">push main</text>
+<line x1="448" y1="435" x2="456" y2="435" stroke="#5B3A29" stroke-width="2"/><polygon points="462,435 455,431 455,439" fill="#5B3A29"/>
+<rect x="462" y="404" width="132" height="62" rx="8" fill="#FFFFFF" stroke="#1F7A3A" stroke-width="1.5"/>
+<text xml:space="preserve" x="474" y="426" font-size="13" font-weight="700" fill="#1E2747" text-anchor="start">Live rerun</text>
+<text xml:space="preserve" x="474" y="444" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">144 / 146 PASS;</text><text xml:space="preserve" x="474" y="458" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">2 stale checks fixed</text>
+<line x1="594" y1="435" x2="602" y2="435" stroke="#5B3A29" stroke-width="2"/><polygon points="608,435 601,431 601,439" fill="#5B3A29"/>
+<rect x="608" y="404" width="132" height="62" rx="8" fill="#FFFFFF" stroke="#1F7A3A" stroke-width="1.5"/>
+<text xml:space="preserve" x="620" y="426" font-size="13" font-weight="700" fill="#1E2747" text-anchor="start">Verdict</text>
+<text xml:space="preserve" x="620" y="444" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">GO for v1.1.1</text><text xml:space="preserve" x="620" y="458" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">live = repo bundle</text>
+<text xml:space="preserve" x="24" y="494" font-size="11" font-weight="400" fill="#5B3A29" text-anchor="start">Real state stayed untouched: only a few-second NurTest-*.bundle in Keyboard Layouts (deleted by trap) was allowed, for TIS tests.</text>
+</g>
+</svg>

@@ -12,7 +12,9 @@ a Mac and finding that the two Armenian layouts built into macOS don't match. Th
 (XML key tables, a property list and icons), installs with one Terminal line without an administrator
 password, and carries a small brand built around the pomegranate (Նուռ, *nur*), a symbol from Armenian rug
 borders. Six problems surfaced only on a real Mac; each was traced to a root cause and fixed, and the
-fixes are now encoded in the validator and the maintainer docs.
+fixes are now encoded in the validator and the maintainer docs. Three releases followed in two days:
+v1.0.0 hardened the tooling and pinned the installer to verified release tags, v1.1.0 was a UX pass
+(per-layout icons, guidance, a Finder install), and v1.1.1 fixed what a 136-check release QA campaign found.
 
 | Key fact | Value |
 |---|---|
@@ -20,8 +22,9 @@ fixes are now encoded in the validator and the maintainer docs.
 | Layouts shipped | 6: AM Nur Standard, Phonetic, Phonetic Alt, Eastern, Western, Eastern Alt |
 | Source | xkeyboard-config `symbols/am`, 8 upstream variants, vendored with commit hashes |
 | Platform | macOS; Apple Silicon and Intel (no compiled code); built and tested on an Apple M4, macOS 26 "Tahoe" |
-| Install | `curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh \| sh`, per user, no admin password |
-| Verification | 1431 key/modifier pairs offline, 1713 through macOS `UCKeyTranslate`: 0 errors, 0 mismatches |
+| Install | `curl -fsSL https://atanesyan-h-pm.github.io/nur-keyboard/install.sh \| sh`, or `Nur.bundle.zip` via Finder; per user, no admin password |
+| Verification | 1713 key/modifier pairs through macOS `UCKeyTranslate` (0 mismatches); release QA: 136 checks on v1.1.0, 146 on the live v1.1.1 |
+| Releases | v1.0.0 and v1.1.0 (25 Nov 2026), v1.1.1 (26 Nov 2026); each a pinned, checksum-verified tag |
 | Distribution | Public GitHub repo [atanesyan-h-pm/nur-keyboard](https://github.com/atanesyan-h-pm/nur-keyboard), installer on GitHub Pages |
 | Usage data | None yet: the product collects no data and no user research has been done |
 
@@ -162,10 +165,10 @@ interface **հյ Նուռ Ստանդարտ …** (full list in the [README](../R
 
 | Element | Design |
 |---|---|
-| Icon | Pixel pomegranate on a 16 × 16 grid; each square stands for one rug knot ([`branding/icon.svg`](../branding/icon.svg)) |
+| Icon | Pixel pomegranate on a 16 × 16 grid; each square stands for one rug knot ([`branding/icon.svg`](../branding/icon.svg)). Since v1.1 each layout has its own icon ([`branding/icons/`](../branding/icons)): seed colour = layout family, a stripe through the eye = Alt |
 | Banners | Rug-border motif, light and dark versions ([`branding/banner-light.svg`](../branding/banner-light.svg), [`banner-dark.svg`](../branding/banner-dark.svg)) |
 | Palette | Madder red `#A3232F`, saffron `#D49A2E`, indigo `#1E2747`, cream `#F4EAD5`, walnut `#5B3A29`: traditional rug dyes |
-| Source format | Every asset is SVG; `.icns` files are generated from `icon.svg` |
+| Source format | Every asset is SVG; each layout's `.icns` is generated from its SVG by `scripts/build-icons.sh` |
 
 The icon is drawn in colour with a cream outline rather than as a monochrome template, because macOS does
 not honour the template flag in the 🌐 switcher (iteration 3).
@@ -202,8 +205,53 @@ Level 3 matters most: it tests what macOS actually types, not what the XML says.
 while the layouts were still invisible on the Mac (iteration 1), which is why the validator gained checks
 for the rules learned later.
 
-**Gaps.** Level 4 is a checklist, not a recorded run.
-Nothing has been tested with other people, on ISO keyboards or on other macOS versions.
+### Release QA: how v1.1.0 and v1.1.1 were verified
+
+Before calling v1.1.0 done, it went through a full QA campaign planned like a test plan and run by a
+scripted harness. The aim was to test everything a user touches without touching the author's own Mac.
+
+<img src="case-study/qa-method.svg" alt="QA method: isolation with a temporary HOME and stubs, seven test suites with case counts, triage of 136 results into 133 passes, 1 product defect, 2 cosmetic findings and 2 harness bugs, then fix, regression, release and live verification" width="720">
+
+**Isolation.** Every installer run used a temporary `HOME` and `TMPDIR`. A temporary `HOME` alone was not
+enough:
+- `getconf DARWIN_USER_CACHE_DIR` ignores `HOME`, so `install.sh` would still have cleared the real
+  keyboard cache. A stub returned a fake cache folder instead.
+- `defaults` was stubbed to return fixture files of enabled input sources, written in the real
+  `defaults read` format, including `\Uxxxx`-escaped Armenian names. Any other `defaults` call exits 99,
+  so an unexpected write fails loudly instead of changing real settings.
+- `curl` was stubbed to serve a tarball built locally from the release tag, so the installer matrix ran
+  fully offline.
+
+After every suite, guards compared the real Keyboard Layouts folder, the enabled input sources, the cache,
+the repo and the temporary folders with a baseline. Tests that need macOS's input-source system can only
+use the real Keyboard Layouts folder (macOS ignores bundles registered from anywhere else). For those the
+plan allowed a uniquely named `NurTest-*.bundle` for a few seconds, deleted by a trap even on failure.
+
+**Seven suites, 136 checks on v1.1.0:**
+
+| Suite | What it covered | Cases |
+|---|---|---|
+| 1 Static & schema | syntax (`sh`, `dash`, `bash`), `validate.sh` plus 7 broken copies it must reject, versions, the six names in every plist and `.strings` file | 23 |
+| 2 UCKeyTranslate | every key through macOS; negative controls (a wrong table, a broken layout) must fail | 6 |
+| 3 Icons & visuals | deterministic `.icns`, 10 sizes each, exact knot diff between icons, a contact sheet made from the shipped `.icns`, the README pictures | 20 |
+| 4 Installer matrix | flags, fresh install, upgrades and ghost layouts, uninstall with and without a terminal (Return, Ctrl-D, Ctrl-C), cache paths, piped install with a decoy `sh` file | 37 |
+| 5 Packaging & quarantine | clean zip, the validation gate, a fully quarantined bundle registered through macOS | 10 |
+| 6 Edge cases | paths with spaces and Armenian letters, failed or tampered downloads keep the old install, non-macOS, symlinks, error paths, links in the docs | 25 |
+| 7 Published artifacts | the live installer, tag checksum, release zip (read-only downloads) | 8 |
+| Guards | real state unchanged after every suite | 7 |
+
+**Triage.** 133 passed. One product defect (D1) and two cosmetic findings (O1, O2) were reported with the
+exact command, exit code, output and root cause, and fixed in v1.1.1 (see [stage 7](#v111-fixes-from-release-qa)).
+Two failures were bugs in the test harness itself; they were recorded as such, fixed and rerun rather than
+hidden. The verdict was **GO**: everything users receive was verified.
+
+**After the fixes**, the harness ran again on v1.1.1 with five new checks for the fixes (147 rows: 140
+passed, 5 were expected to fail only until v1.1.1 was published, and 2 were harness bugs, fixed and rerun). After publishing, a final run against the live
+release passed 144 of 146; the remaining two were harness checks that still expected v1.1.0, fixed and rerun.
+
+**Gaps.** Level 4 is a checklist, not a recorded run. Finder installs were tested with a quarantined bundle
+registered through macOS, but not yet through a real Safari download and login. Nothing has been tested with
+other people, on ISO keyboards or on other macOS versions. The QA harness lives outside the repository.
 
 ## 6. Launch
 
@@ -222,6 +270,17 @@ Nothing has been tested with other people, on ISO keyboards or on other macOS ve
 - **Per-user install**, no administrator password, no signing or notarisation needed because there is no
   executable code.
 - **README as landing page**: banner, plain-language explanation, picture guide.
+
+### Release process
+
+<img src="case-study/releases.svg" alt="Releases v1.0.0, v1.1.0 and v1.1.1 with their contents, and the seven-step release order: commit, tag, release zip, checksum, pin, push main, verify live" width="720">
+
+Every release follows the same order, so the live installer never points at a tag that doesn't exist:
+commit with the checks passing; tag and push only the tag; create the GitHub Release with `Nur.bundle.zip`
+from `scripts/package-release.sh`; compute the SHA-256 of GitHub's tag tarball twice to confirm it is
+stable; pin `VERSION` and `EXPECTED_SHA256` in `install.sh`; push `main` so GitHub Pages serves the new
+installer; then verify the live install and the release zip. A push to `main` alone never changes what
+users get.
 
 ## 7. Measure & Improve
 
@@ -243,6 +302,25 @@ Six problems appeared only when the layouts met a real Mac. They are listed in t
 These rules now live in [DEVELOPMENT.md](../DEVELOPMENT.md#macos-rules-learned-the-hard-way) and, where
 possible, in `scripts/validate.sh`.
 
+### Before v1.0.0: hardening the tooling
+
+A review of the scripts, before the first tagged release, focused on failures that would go unnoticed:
+
+| Area | Change | Why |
+|---|---|---|
+| `validate.sh` | `pipefail`; NUL check with extended regex; masking of every XML 1.1 control-reference form; every `TISInputSourceID` must contain `keyboardlayout` | A pipeline failure or an unusual reference form must never pass silently |
+| `svg2png.swift` | no force-unwraps; every failure exits 1 with a message | A broken input must never produce a blank PNG with exit code 0 |
+| `build-icons.sh` | compiles the rasteriser once | 2.6 s → 1.3 s, identical output |
+| `install.sh` | downloads a pinned tag, verified with SHA-256; local mode only when run as a file named `install.sh` | Users get reviewed files; a stray `sh` file can't trick a piped install |
+| `test-layouts.swift` | the `UCKeyTranslate` check became a script | Repeatable level-3 validation |
+
+Testing the new script exposed two surprises. Its first version reported a deliberately broken layout as
+passing: macOS caches input sources by id, so it returned the installed layouts instead of the broken copy.
+The fix was a temporary copy with a unique bundle id, unique input-source ids and unique numeric layout ids,
+placed in `~/Library/Keyboard Layouts`, the only folder macOS registers bundles from. And under the `swift`
+interpreter the exit handler never ran, which left a test bundle that would have appeared as duplicate
+layouts at the next login; every exit path now removes it.
+
 ### v1.1: a UX pass
 
 After the first round, a review of the end-user experience found five more gaps, all fixed in v1.1:
@@ -254,6 +332,17 @@ After the first round, a review of the end-user experience found five more gaps,
 | Installing needed Terminal | A Finder path with `Nur.bundle.zip` from GitHub Releases, plus a drawn picture |
 | Uninstall said "remove the layouts in Settings" after deleting them | The installer checks for enabled layouts first and waits until they're removed; upgrades name any old entries that would be left as ghosts |
 | Troubleshooting asked users to type `rm -f` on a system cache path | `install.sh --clear-cache`; the cache is also cleared on install and uninstall |
+
+### v1.1.1: fixes from release QA
+
+| # | Found by | Problem | Root cause | Fix | Verified by |
+|---|---|---|---|---|---|
+| D1 | Packaging gate test (suite 5) | A failed `package-release.sh` run left an older `dist/Nur.bundle.zip` in place; a maintainer could upload a stale archive | The old zip was deleted only after validation passed; a failed self-check also left an unverified zip | Remove the old zip first; delete the zip on any failure | Both failure paths and the success path |
+| O1 | Realistic `defaults` fixtures (suite 6) | The upgrade note could show names as `\U0570…` | `defaults read` prints non-ASCII as escape codes | Convert with `plutil -convert xml1` for display; fall back to raw text | Decoded and fallback paths select the same entries |
+| O2 | `svg2png` error paths (suite 6) | "The folder “x.png” doesn't exist" named the file, not the missing folder | Foundation's own error message | Check the output folder first | Missing and read-only folders |
+
+All three were maintainer-facing or cosmetic, so v1.1.0 stayed live while v1.1.1 was prepared, regression
+tested and published.
 
 ### What to measure next (proposals)
 
@@ -278,6 +367,8 @@ opt-in feedback.
 | Real screenshots per macOS version, alongside the drawings | Matching what users actually see |
 | Armenian-language user guide | Users who prefer to read in Armenian |
 | Interviews with Linux → Mac switchers who type Armenian | Validating the user assumptions from stage 1 |
+| Move the release QA harness into the repository and run it on every release | Today it lives outside the repo; release checks should be repeatable by anyone |
+| A recorded Finder install from a real Safari download, with a login | Closing the one gap the automated quarantine test can't cover |
 
 ## Lessons learned
 
@@ -298,3 +389,12 @@ opt-in feedback.
    be removed; a clear explanation is the fix, and it is now in the user guide.
 8. **Without data, label assumptions.** The only user so far is the author. The next round of the loop
    starts with talking to other users.
+9. **Test the test.** A negative control (a deliberately broken layout) showed that the first version of the
+   macOS test passed whatever macOS had cached. A check that can't fail proves nothing.
+10. **A temporary HOME is not isolation.** Some system paths don't come from `HOME`. Stubs that fail loudly,
+    and before/after guards on real state, made it safe to run 136 checks on the author's own Mac.
+11. **Report harness bugs as harness bugs.** Four test-script mistakes (a `diff` piped under `pipefail`, a
+    signal sent to the wrong process, an input-source id form, a stale version check) were recorded,
+    explained and rerun, never quietly turned into passes. The report stays trustworthy that way.
+12. **Make releases verifiable.** Pinned tags, a checksum and a fixed publishing order mean every user gets
+    exactly the reviewed files, and anyone can check it.
